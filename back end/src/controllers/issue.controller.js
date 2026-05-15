@@ -149,6 +149,9 @@ const markInProgress = async (req, res) => {
     if (!issue) {
       return res.status(404).json({ message: 'Issue not found' });
     }
+    if (issue.status === 'RESOLVED' || issue.status === 'CLOSED') {
+  return res.status(400).json({ message: 'Cannot mark a resolved or closed issue as in progress' });
+}
 
     const assignment = await prisma.assignment.findFirst({
       where: { issueId: id, workerId: req.user.id },
