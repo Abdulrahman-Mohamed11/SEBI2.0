@@ -1,3 +1,7 @@
+// Authentication Middleware — CampusCare API
+// authenticate : verifies Bearer JWT, loads user from DB, attaches to req.user
+// authorize    : role-guard factory — returns 403 if role not in allowed list
+
 const jwt = require('jsonwebtoken');
 const prisma = require('../config/prisma');
 
