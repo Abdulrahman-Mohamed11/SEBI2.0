@@ -15,6 +15,11 @@ const register = async (req, res) => {
     if (name.trim().length < 2) return res.status(400).json({ message: 'Name must be at least 2 characters' });
     if (password.length < 6) return res.status(400).json({ message: 'Password must be at least 6 characters' });
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+    return res.status(400).json({ message: 'Please enter a valid email address' });
+}
+
 
     if (role && !ALLOWED_REGISTER_ROLES.includes(role)) {
       return res.status(400).json({ message: 'Invalid role' });
