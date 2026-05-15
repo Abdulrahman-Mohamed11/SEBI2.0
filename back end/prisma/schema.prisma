@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id          String       @id @default(uuid())
+  name        String
+  email       String       @unique
+  password    String
+  role        Role         @default(COMMUNITY_MEMBER)
+  isActive    Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  assignments Assignment[] @relation("WorkerAssignments")
+  comments    Comment[]    @relation("AuthoredComments")
+  issues      Issue[]      @relation("SubmittedIssues")
+}
+
+model Issue {
+  id            String        @id @default(uuid())
+  title         String
+  description   String
+  category      IssueCategory
+  location      String
+  status        IssueStatus   @default(PENDING)
+  photoUrl      String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  submittedById String
+  assignments   Assignment[]  @relation("IssueAssignments")
+  comments      Comment[]     @relation("IssueComments")
+  submittedBy   User          @relation("SubmittedIssues", fields: [submittedById], references: [id])
+}
+
+model Assignment {
+  id         String   @id @default(uuid())
+  assignedAt DateTime @default(now())
+  issueId    String
+  workerId   String
+  issue      Issue    @relation("IssueAssignments", fields: [issueId], references: [id])
+  worker     User     @relation("WorkerAssignments", fields: [workerId], references: [id])
+
+  @@unique([issueId, workerId])
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  content   String
+  photoUrl  String?
+  createdAt DateTime @default(now())
+  issueId   String
+  authorId  String
+  author    User     @relation("AuthoredComments", fields: [authorId], references: [id])
+  issue     Issue    @relation("IssueComments", fields: [issueId], references: [id])
+}
+
+enum Role {
+  COMMUNITY_MEMBER
+  FACILITY_MANAGER
+  WORKER
+  ADMIN
+}
+
+enum IssueStatus {
+  PENDING
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum IssueCategory {
+  ELECTRICAL
+  PLUMBING
+  CLEANING
+  STRUCTURAL
+  HVAC
+  OTHER
+}
