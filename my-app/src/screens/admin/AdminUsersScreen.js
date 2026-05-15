@@ -1,4 +1,14 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback,useMemo,useState} from 'react';
+
+// Wrap filtered with useMemo:
+const filtered = useMemo(() => users.filter((u) => {
+  const matchesSearch = !search.trim() ||
+    u.name.toLowerCase().includes(search.toLowerCase()) ||
+    u.email.toLowerCase().includes(search.toLowerCase());
+  const matchesRole = !filterRole || u.role === filterRole;
+  return matchesSearch && matchesRole;
+}), [users, search, filterRole]);
+
 import {
   View, Text, FlatList, TouchableOpacity,
   StyleSheet, RefreshControl, ActivityIndicator, Alert,
