@@ -31,6 +31,13 @@ const authenticate = async (req, res, next) => {
   req.user = user;
   next();
 };
+/**
+ * @function authorize
+ * @desc Restricts route access to users whose role is in the allowed list.
+ * @param {...string} roles - e.g. "ADMIN", "FACILITY_MANAGER", "WORKER"
+ * @returns {Function} Express middleware — calls next() or returns 403
+ */
+
 
 const authorize = (...roles) => (req, res, next) => {
   if (!roles.includes(req.user.role)) {
