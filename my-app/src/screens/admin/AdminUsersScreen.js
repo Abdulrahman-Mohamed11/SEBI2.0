@@ -189,6 +189,7 @@ export default function AdminUsersScreen() {
     <SafeAreaView style={styles.safe} edges={['top']}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>User Management 👥</Text>
+        <Text style={styles.userCount}>{users.length} total user{users.length !== 1 ? 's' : ''}</Text>
         <TouchableOpacity onPress={confirmLogout} activeOpacity={0.8}>
           <Text style={styles.signOutText}>Sign Out</Text>
         </TouchableOpacity>
@@ -347,4 +348,8 @@ const styles = StyleSheet.create({
   emptyState: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingTop: 80 },
   emptyIcon: { fontSize: 48, marginBottom: 16 },
   emptyTitle: { fontSize: 18, fontWeight: '700', color: COLORS.primary },
+
+  // Add this to StyleSheet.create at the end:
+userCount: { fontSize: 12, color: 'rgba(255,255,255,0.65)', marginTop: 2 },
+
 });
