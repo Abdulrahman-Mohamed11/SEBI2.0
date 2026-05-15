@@ -18,6 +18,9 @@ const createIssue = async (req, res) => {
     if (!title || !description || !category || !location) {
       return res.status(400).json({ message: 'title, description, category and location are required' });
     }
+    if (title.trim().length < 5) {
+  return res.status(400).json({ message: 'Title must be at least 5 characters' });
+}
 
     const issue = await prisma.issue.create({
       data: {
