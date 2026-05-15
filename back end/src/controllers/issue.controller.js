@@ -109,7 +109,9 @@ const assignWorker = async (req, res) => {
     if (!worker || worker.role !== 'WORKER') {
       return res.status(400).json({ message: 'Worker not found or not a WORKER role' });
     }
-
+    if (!worker.isActive) {
+    return res.status(400).json({ message: 'Cannot assign an inactive worker' });
+}
     const assignment = await prisma.assignment.upsert({
       where: { issueId_workerId: { issueId: id, workerId } },
       update: {},
