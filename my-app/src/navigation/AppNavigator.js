@@ -1,3 +1,4 @@
+import { COLORS } from '../constants/theme';
 import React from 'react';
 import { ActivityIndicator, View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -14,7 +15,7 @@ export default function AppNavigator() {
   if (loading) {
     return (
       <View style={styles.center}>
-        <ActivityIndicator size="large" color="#2563eb" />
+        <ActivityIndicator size="large" color={COLORS.accent} />
       </View>
     );
   }
