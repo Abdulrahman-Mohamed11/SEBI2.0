@@ -8,7 +8,10 @@ const CONFIG = {
   RESOLVED:    { label: 'Resolved',    bg: COLORS.resolvedBg,   text: COLORS.resolvedText },
   CLOSED:      { label: 'Closed',      bg: COLORS.closedBg,     text: COLORS.closedText },
 };
-
+/**
+ * StatusBadge — displays a colored pill for an issue status.
+ * @param {{ status: 'PENDING'|'IN_PROGRESS'|'RESOLVED'|'CLOSED' }} props
+ */
 export default function StatusBadge({ status }) {
   const cfg = CONFIG[status] ?? CONFIG.PENDING;
   return (
