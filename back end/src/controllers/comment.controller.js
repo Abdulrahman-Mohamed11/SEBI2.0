@@ -8,6 +8,9 @@ const addComment = async (req, res) => {
     if (!content) {
       return res.status(400).json({ message: 'Content is required' });
     }
+    if (content.length > 1000) {
+  return res.status(400).json({ message: 'Comment must be 1000 characters or less' });
+}
 
     const issue = await prisma.issue.findUnique({ where: { id: issueId } });
     if (!issue) {

@@ -18,6 +18,9 @@ const createIssue = async (req, res) => {
     if (!title || !description || !category || !location) {
       return res.status(400).json({ message: 'title, description, category and location are required' });
     }
+    if (title.trim().length < 5) {
+  return res.status(400).json({ message: 'Title must be at least 5 characters' });
+}
 
     const issue = await prisma.issue.create({
       data: {
@@ -106,7 +109,9 @@ const assignWorker = async (req, res) => {
     if (!worker || worker.role !== 'WORKER') {
       return res.status(400).json({ message: 'Worker not found or not a WORKER role' });
     }
-
+    if (!worker.isActive) {
+    return res.status(400).json({ message: 'Cannot assign an inactive worker' });
+}
     const assignment = await prisma.assignment.upsert({
       where: { issueId_workerId: { issueId: id, workerId } },
       update: {},
@@ -144,6 +149,9 @@ const markInProgress = async (req, res) => {
     if (!issue) {
       return res.status(404).json({ message: 'Issue not found' });
     }
+    if (issue.status === 'RESOLVED' || issue.status === 'CLOSED') {
+  return res.status(400).json({ message: 'Cannot mark a resolved or closed issue as in progress' });
+}
 
     const assignment = await prisma.assignment.findFirst({
       where: { issueId: id, workerId: req.user.id },
