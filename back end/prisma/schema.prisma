@@ -33,7 +33,10 @@ model Issue {
   submittedById String
   assignments   Assignment[]  @relation("IssueAssignments")
   comments      Comment[]     @relation("IssueComments")
-  submittedBy   User          @relation("SubmittedIssues", fields: [submittedById], references: [id])
+  submittedBy   User          @relation("SubmittedIssues", fields: [submittedById], references: [id]) 
+  @@index([status])
+  @@index([submittedById])
+  @@index([createdAt])
 }
 
 model Assignment {

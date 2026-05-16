@@ -11,9 +11,11 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder: 'campuscare',
-    allowed_formats: ['jpg', 'jpeg', 'png'],
-  },
+  folder: 'campuscare',
+  allowed_formats: ['jpg', 'jpeg', 'png'],
+  resource_type: 'image',
+  transformation: [{ quality: 'auto:good', fetch_format: 'auto' }],
+},
 });
 
 const upload = multer({ storage });
