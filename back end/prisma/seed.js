@@ -1,3 +1,6 @@
+// Database seed — CampusCare
+// Run: npm run db:seed
+// Safe to re-run (uses upsert — no duplicates)
 require('dotenv/config');
 const bcrypt = require('bcryptjs');
 const { Pool } = require('pg');
