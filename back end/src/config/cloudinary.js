@@ -10,7 +10,7 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
   cloudinary,
-  params: {
+ params: {
   folder: 'campuscare',
   allowed_formats: ['jpg', 'jpeg', 'png'],
   resource_type: 'image',
