@@ -1,3 +1,6 @@
+// AuthContext — CampusCare global authentication state.
+// On app launch: restores JWT from AsyncStorage and re-fetches user profile.
+// Provides: user, token, loading, login(), register(), logout()
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { loginApi, registerApi, getMeApi } from '../api/auth.api';
