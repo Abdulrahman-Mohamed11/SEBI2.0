@@ -14,6 +14,12 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/api/health', (req, res) => res.json({ status: 'OK' }));
+// ─── API Routes ───────────────────────────────────────────────────
+// /api/auth    — registration, login, profile
+// /api/issues  — issue CRUD, comments, assignment
+// /api/admin   — admin-only user management
+// /api/users   — shared user queries (e.g. workers list)
+// ──────────────────────────────────────────────────────────────────
 
 app.use('/api/auth', authRoutes);
 app.use('/api/issues', issueRoutes);
