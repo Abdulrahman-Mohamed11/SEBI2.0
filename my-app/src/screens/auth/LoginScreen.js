@@ -40,11 +40,11 @@ export default function LoginScreen({ navigation }) {
   };
 
   const confirmLogout = () => {
-    Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
-      { text: 'Cancel', style: 'cancel' },
-      { text: 'Sign Out', style: 'destructive', onPress: () => {} },
-    ]);
-  };
+  Alert.alert("Sign Out", "Are you sure you want to sign out?", [
+    { text: "Cancel", style: "cancel" },
+    { text: "Sign Out", style: "destructive", onPress: () => {} },
+  ]);
+};
 
   return (
     <SafeAreaView style={styles.safe}>
