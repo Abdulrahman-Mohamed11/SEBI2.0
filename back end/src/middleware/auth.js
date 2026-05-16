@@ -1,3 +1,7 @@
+// Authentication Middleware — CampusCare API
+// authenticate : verifies Bearer JWT, loads user from DB, attaches to req.user
+// authorize    : role-guard factory — returns 403 if role not in allowed list
+
 const jwt = require('jsonwebtoken');
 const prisma = require('../config/prisma');
 
@@ -27,6 +31,13 @@ const authenticate = async (req, res, next) => {
   req.user = user;
   next();
 };
+/**
+ * @function authorize
+ * @desc Restricts route access to users whose role is in the allowed list.
+ * @param {...string} roles - e.g. "ADMIN", "FACILITY_MANAGER", "WORKER"
+ * @returns {Function} Express middleware — calls next() or returns 403
+ */
+
 
 const authorize = (...roles) => (req, res, next) => {
   if (!roles.includes(req.user.role)) {
