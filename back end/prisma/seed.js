@@ -15,17 +15,31 @@ async function main() {
   const hashed = await bcrypt.hash('admin123', 10);
 
   await prisma.user.upsert({
-    where: { email: 'admin@campuscare.com' },
-    update: {},
-    create: {
-      name: 'System Admin',
-      email: 'admin@campuscare.com',
-      password: hashed,
-      role: 'ADMIN',
-    },
-  });
+  where: { email: 'admin@campuscare.com' },
+  update: {},
+  create: {
+    name: 'System Admin',
+    email: 'admin@campuscare.com',
+    password: hashed,
+    role: 'ADMIN',
+  },
+});
 
-  console.log('Admin seeded: admin@campuscare.com / admin123');
+const workerHashed = await bcrypt.hash('worker123', 10);
+
+await prisma.user.upsert({
+  where: { email: 'worker@campuscare.com' },
+  update: {},
+  create: {
+    name: 'Demo Worker',
+    email: 'worker@campuscare.com',
+    password: workerHashed,
+    role: 'WORKER',
+  },
+});
+
+console.log('Admin seeded: admin@campuscare.com / admin123');
+console.log('Worker seeded: worker@campuscare.com / worker123');
 }
 
 main()
