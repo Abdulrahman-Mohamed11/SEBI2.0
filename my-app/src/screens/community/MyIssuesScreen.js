@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback,useMemo, useState } from 'react';
 import {
   View, Text, FlatList, TouchableOpacity,
   StyleSheet, RefreshControl, ActivityIndicator, Alert,
@@ -88,12 +88,15 @@ export default function MyIssuesScreen({ navigation }) {
   const inProgress = issues.filter((i) => i.status === 'IN_PROGRESS').length;
   const resolved = issues.filter((i) => i.status === 'RESOLVED').length;
 
-  const filtered = issues
+  const filtered = useMemo(() =>
+  issues
     .filter((i) => filter === 'ALL' || i.status === filter)
     .filter((i) =>
       i.title.toLowerCase().includes(search.toLowerCase()) ||
       i.location.toLowerCase().includes(search.toLowerCase())
-    );
+    ),
+  [issues, filter, search]
+);
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
