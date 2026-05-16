@@ -1,3 +1,8 @@
+// Form validation utilities — CampusCare
+// Each validateXxxForm() returns an errors object.
+// Keys are field names, values are error message strings.
+// An empty object {} means the form passed all validation.
+
 export const validateEmail = (email) => {
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return re.test(email);
