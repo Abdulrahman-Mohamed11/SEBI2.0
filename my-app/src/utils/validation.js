@@ -29,7 +29,11 @@ export const validateLoginForm = (email, password) => {
 export const validateRegisterForm = (name, email, password) => {
   const errors = {};
   const nameError = validateRequired(name, 'Full name');
-  if (nameError) errors.name = nameError;
+if (nameError) {
+  errors.name = nameError;
+} else if (name.trim().length < 2) {
+  errors.name = 'Name must be at least 2 characters';
+}
   if (!validateEmail(email)) errors.email = 'Please enter a valid email address';
   const passError = validatePassword(password);
   if (passError) errors.password = passError;
