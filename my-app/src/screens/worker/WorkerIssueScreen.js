@@ -27,12 +27,7 @@ const ROLE_LABELS = {
   ADMIN: 'Admin',
 };
 
-const confirmLogout = (logout) => {
-  Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
-    { text: 'Cancel', style: 'cancel' },
-    { text: 'Sign Out', style: 'destructive', onPress: logout },
-  ]);
-};
+
 
 export default function WorkerIssueScreen({ route }) {
   const { issue: initial } = route.params;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   View, Text, ScrollView, StyleSheet,
   Image, ActivityIndicator, Alert, TouchableOpacity,
@@ -70,7 +70,10 @@ export default function IssueDetailScreen({ route, navigation }) {
     );
   };
 
-  const currentOrder = STATUS_ORDER[issue.status] ?? 0;
+ const currentOrder = useMemo(
+  () => STATUS_ORDER[issue.status] ?? 0,
+  [issue.status]
+);
 
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
