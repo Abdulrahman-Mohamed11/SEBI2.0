@@ -1,14 +1,4 @@
-import React, { useCallback,useMemo,useState} from 'react';
-
-// Wrap filtered with useMemo:
-const filtered = useMemo(() => users.filter((u) => {
-  const matchesSearch = !search.trim() ||
-    u.name.toLowerCase().includes(search.toLowerCase()) ||
-    u.email.toLowerCase().includes(search.toLowerCase());
-  const matchesRole = !filterRole || u.role === filterRole;
-  return matchesSearch && matchesRole;
-}), [users, search, filterRole]);
-
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   View, Text, FlatList, TouchableOpacity,
   StyleSheet, RefreshControl, ActivityIndicator, Alert,
@@ -52,7 +42,7 @@ export default function AdminUsersScreen() {
     if (isRefresh) setRefreshing(true);
     try {
       const { data } = await getAllUsersApi();
-      setUsers(data);
+      setUsers(data.users);
     } catch {
       Alert.alert('Error', 'Failed to load users.');
     } finally {
@@ -122,13 +112,13 @@ export default function AdminUsersScreen() {
   };
 
   const filterRole = ROLE_FILTER_MAP[roleFilter];
-  const filtered = users.filter((u) => {
+  const filtered = useMemo(() => (users || []).filter((u) => {
     const matchesSearch = !search.trim() ||
       u.name.toLowerCase().includes(search.toLowerCase()) ||
       u.email.toLowerCase().includes(search.toLowerCase());
     const matchesRole = !filterRole || u.role === filterRole;
     return matchesSearch && matchesRole;
-  });
+  }), [users, search, filterRole]);
 
   const renderItem = ({ item }) => {
     const role = ROLE_CONFIG[item.role] ?? { label: item.role, bg: '#64748B', text: '#FFFFFF' };
